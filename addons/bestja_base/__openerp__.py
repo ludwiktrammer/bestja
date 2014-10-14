@@ -12,6 +12,7 @@
     # any module necessary for this one to work correctly
     'depends': [
         'base',
+        'web',  # Without this dependency, Runbot seems to have problems.
         'auth_signup'
     ],
 

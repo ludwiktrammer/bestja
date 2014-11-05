@@ -8,12 +8,13 @@
     'depends': [
         'bestja_base',  # This dependency is redundant, but we need to load it first because of monkeypatches.
         'base',
-        'project',
-        'bestja_organization'
+        'bestja_organization',
+        'bestja_volunteer',
     ],
 
     'data': [
-        'views/project.xml'
+        'views/project.xml',
+        'menu.xml',
     ],
     'demo': [
     ],

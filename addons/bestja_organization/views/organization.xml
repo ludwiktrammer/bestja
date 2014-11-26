@@ -67,7 +67,7 @@
             <field name="arch" type="xml">
                 <tree fonts="bold:coordinator_uid == uid">
                     <field name="name"/>
-                    <field name="active"/>
+                    <field name="state"/>
                     <field name="coordinator_uid" invisible="1"/>
                 </tree>
             </field>

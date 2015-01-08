@@ -17,12 +17,12 @@
                         <notebook colspan="4">
                             <page string="Kwalifikacje">
                                 <group colspan="4" col="2">
-                                    <field name="occupation" string="Zajęcie"/>
-                                    <field name="skills" string="Umiejętności" widget="many2many_tags"/>
-                                    <field name="languages" string="Języki" widget="many2many_tags"/>
+                                    <field name="occupation" string="Zajęcie" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="skills" string="Umiejętności" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="languages" string="Języki" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
                                 </group>
                                 <group colspan="4" col="2" string="Uprawnienia">
-                                    <field name="drivers_license" string="Prawa jazdy" widget="many2many_tags"/>
+                                    <field name="drivers_license" string="Prawa jazdy" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
                                     <label for="sanepid" string="Badania Sanepid" />
                                     <div>
                                         <field name="sanepid" class="oe_inline" /> <span class="oe_grey"> data ważności (puste = brak badań)</span>
@@ -32,14 +32,15 @@
                                         <field name="forklift" class="oe_inline" /> <span class="oe_grey">data ważności (puste = brak uprawnień)</span>
                                     </div>
                                 </group>
-                                 <group col="2">
-                                 <label for="curriculum_vitae"/>
-                                 <div>
-                                     <field name="curriculum_vitae" filename="cv_filename" class="no_clear_button medium_input"/>
-                                     <div class="oe_grey oe_edit_only">Dodaj swoje CV (max. wielkość pliku do <strong>25 MB</strong>)</div>
-                                 </div>
-                                 <field name="cv_filename" invisible="1"/>
-                                 </group>
+                                <separator/>
+                                <group col="2">
+                                <label for="curriculum_vitae"/>
+                                <div>
+                                 <field name="curriculum_vitae" filename="cv_filename" class="no_clear_button medium_input"/>
+                                 <div class="oe_grey oe_edit_only">Dodaj swoje CV (max. wielkość pliku do <strong>25 MB</strong>)</div>
+                                </div>
+                                <field name="cv_filename" invisible="1"/>
+                                </group>
                             </page>
                             <page string="Zainteresowania">
                                 <field name="wishes" widget="many2many_checkboxes"/>

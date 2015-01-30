@@ -10,22 +10,9 @@
     'depends': [
         'base',
         'bestja_base',
-        'bestja_volunteer',
-        'bestja_volunteer_notes',
-        'bestja_account_deletion',
-        'bestja_organization',
-        'bestja_project',
-        'bestja_offers',
-        'bestja_offers_moderation',
-        'bestja_offers_invitations',
-        'bestja_offers_categorization',
-        'bestja_files',
-        'bestja_application_moderation',
-        'bestja_ucw_permissions',
-        'signup_age_verification',
+        'website_blog',
     ],
     'data': [
-        'data.xml',
     ],
     'application': True,
 }

@@ -3,7 +3,7 @@
     <data noupdate="1">
         <record id="base.main_company" model="res.company">
             <field name="name">Uniwersyteckie Centrum Wolontariatu</field>
-            <field name="email">bestja@wolontariat.uw.edu.pl</field>
+            <field name="email">bestja.ucw@runbot-odoo-dev.laboratorium.ee</field>
             <field name="website">wolontariat.uw.edu.pl</field>
         </record>
     </data>

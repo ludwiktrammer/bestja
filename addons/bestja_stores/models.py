@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import datetime
 
 from openerp import models, fields, api, exceptions
 
@@ -455,6 +456,36 @@ class StoreInProject(models.Model):
         return record
 
     @api.one
+    def add_days(self):
+        """
+        Create `bestja_stores.day` objects for all days in the project.
+        """
+        # Find a previous time an event was held in the store.
+        # We want to find the second (yes!) day of the last event.
+        # This will be used to copy default values for from / to times.
+        previous_day = self.env['bestja_stores.day'].search(
+            [
+                ('store.store', '=', self.store.id),
+                ('store.state', '=', 'activated'),
+            ],
+            order='store desc, date',
+            limit=2,
+        )
+        previous_day = previous_day[1] if len(previous_day) > 1 else previous_day
+
+        delta = datetime.timedelta(days=1)
+        day = fields.Date.from_string(self.date_start)
+        last_day = fields.Date.from_string(self.date_stop)
+        while day <= last_day:
+            self.env['bestja_stores.day'].create({
+                'store': self.id,
+                'date': fields.Date.to_string(day),
+                'time_from': previous_day.time_from or "09:00",
+                'time_to': previous_day.time_to or "18:00",
+            })
+            day += delta
+
+    @api.one
     def name_get(self):
         name_string = u"{store} ({project})".format(store=self.store.name, project=self.project.name)
         return (self.id, name_string)
@@ -475,28 +506,12 @@ class DayInStore(models.Model):
         string="Dzień zbiórki",
     )
     time_from = fields.Char(
-        string="Start"
+        required=True,
+        string="Start",
     )
     time_to = fields.Char(
-        string="Koniec",
-    )
-    # Computed versions of the above fields, to be able to
-    # provide store specific defaults
-    time_from_default = fields.Char(
         required=True,
-        compute='_compute_time_from',
-        inverse='_inverse_time_from',
-        string="Start"
-    )
-    time_to_default = fields.Char(
-        required=True,
-        compute='_compute_time_to',
-        inverse='_inverse_time_to',
         string="Koniec",
-    )
-    previous_day = fields.Many2one(
-        'bestja_stores.day',
-        compute='_compute_previous_day',
     )
 
     _sql_constraints = [
@@ -504,61 +519,10 @@ class DayInStore(models.Model):
     ]
 
     @api.one
-    @api.depends('store.store')
-    def _compute_previous_day(self):
-        """
-        Previously accepted day in the same store,
-        needed for default hours
-        """
-        previous_day = self.env['bestja_stores.day'].search(
-            [
-                ('store.store', '=', self.store.store.id),
-                ('store.state', '=', 'activated'),
-            ],
-            order='store desc, date',
-            limit=1,
-        )
-        self.previous_day = previous_day.id
-
-    @api.one
-    @api.depends('time_from', 'previous_day', 'store')
-    def _compute_time_from(self):
-        """
-        If time_from is set just present it.
-        If not present a default value - the previous time
-        from the same store in the most recent project.
-        """
-        if self.time_from:
-            self.time_from_default = self.time_from
-        else:
-            self.time_from_default = self.previous_day.time_from
-
-    @api.one
-    @api.depends('time_to', 'previous_day', 'store')
-    def _compute_time_to(self):
-        """
-        If time_to is set just present it.
-        If not present a default value - the previous time
-        from the same store in the most recent project.
-        """
-        if self.time_to:
-            self.time_to_default = self.time_to
-        else:
-            self.time_to_default = self.previous_day.time_to
-
-    @api.one
-    def _inverse_time_from(self):
-        self.time_from = self.time_from_default
-
-    @api.one
-    def _inverse_time_to(self):
-        self.time_to = self.time_to_default
-
-    @api.one
     @api.constrains('time_from', 'time_to')
     def _check_hours(self):
         time_pattern = re.compile(r"^([0-1][0-9]|2[0-4]):[0-5][0-9]$")
-        if not time_pattern.match(self.time_to_default) or not time_pattern.match(self.time_from_default):
+        if not time_pattern.match(self.time_to) or not time_pattern.match(self.time_from):
             raise exceptions.ValidationError("Godzina musi być podana w formacie hh:mm!")
 
     @api.one

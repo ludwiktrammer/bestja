@@ -119,19 +119,23 @@
                         <field name="store" options="{'no_create': True}"/>
                         <div class="oe_edit_only"><field name="show_all_stores"/><label for="show_all_stores"/></div>
                     </group>
-                    <separator string="Dni zbiórki w sklepie"/>
-                    <div>Dodaj dni, w których będziesz realizować zbiórkę trwającą:</div>
-                    <group>
-                        <field name="date_start"/>
-                        <field name="date_stop"/>
-                    </group>
-                    <field name="days" context="{'project': project}">
-                        <tree editable="1">
-                            <field name="date"/>
-                            <field name="time_from_default" placeholder="HH:MM"/>
-                            <field name="time_to_default" placeholder="HH:MM"/>
-                        </tree>
-                    </field>
+
+                    <widget type="non_disableable_button" string="Dodaj dni zbiórki ▶" data-button-type="object" name="add_days" attrs="{'invisible': ['|', ('days', '!=', []), ('state', 'in', ['rejected', 'deactivated'])]}"/>
+                    <div attrs="{'invisible': [('days', '=', [])]}">
+                        <separator string="Dni zbiórki w sklepie"/>
+                        <div>Dodaj dni, w których będziesz realizować zbiórkę trwającą:</div>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                        </group>
+                        <field name="days" context="{'project': project}">
+                            <tree editable="1">
+                                <field name="date"/>
+                                <field name="time_from" placeholder="HH:MM"/>
+                                <field name="time_to" placeholder="HH:MM"/>
+                            </tree>
+                        </field>
+                    </div>
                 </form>
             </field>
         </record>

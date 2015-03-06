@@ -1,0 +1,9 @@
+<openerp>
+    <data>
+        <template id="assets_backend" name="stores assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/bestja_stores/static/src/js/non_disableable_button.js"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>

@@ -1,34 +1,7 @@
 # -*- coding: utf-8 -*-
 from urlparse import urljoin
 
-from openerp import models, api, tools
-
-
-class Notification(models.Model):
-    _inherit = 'mail.notification'
-
-    @api.model
-    def get_signature_footer(self, user_id, res_model=None, res_id=None, user_signature=True):
-        """
-        Generate Footer in mail notifications.
-        """
-        footer = ""
-        user = self.env['res.users'].browse([user_id])
-
-        if user_signature:
-            footer = tools.append_content_to_html(footer, u"<p>{}</p>".format(user.name), plaintext=False)
-
-        website = user.company_id.website
-        website_url = ('http://%s' % website) if not website.lower().startswith(('http:', 'https:')) else website
-
-        signature = u"""<br/>-- <br/>
-Wiadomość wysłana przez <a href='{url}'>{name}</a> poprzez aplikację (C) 2015 GooDoo.ee.""".format(
-            url=website_url,
-            name=user.company_id.name,
-        )
-        footer = tools.append_content_to_html(footer, signature, plaintext=False, container_tag='div')
-
-        return footer
+from openerp import models, api
 
 
 class Mail(models.Model):

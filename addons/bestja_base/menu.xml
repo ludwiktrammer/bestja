@@ -1,12 +1,5 @@
 <openerp>
     <data>
         <menuitem sequence="0" id="menu_bestja" name="Aplikacja"/>
-        <!-- Add Messages menu item to BestJa -->
-        <menuitem name="Messaging" id="mail.mail_feeds" parent="bestja_base.menu_bestja" sequence="0"/>
-        <!-- hide the regular messaging menu -->
-        <record id="mail.mail_feeds_main" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
-        </record>
-        <delete id="mail.mail_tomefeeds" model="ir.ui.menu"/>
     </data>
 </openerp>

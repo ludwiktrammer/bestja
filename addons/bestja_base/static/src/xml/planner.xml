@@ -1,0 +1,6 @@
+<template>
+    <t t-extend="PlannerLauncher">
+        <!-- remove everything -->
+        <t t-jquery="li" t-operation="replace"/>
+    </t>
+</template>

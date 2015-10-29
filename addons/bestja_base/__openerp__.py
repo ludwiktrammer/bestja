@@ -18,7 +18,8 @@ It includes (among other things) the BestJa menu and CSS definitions. """,
         'mail',
         'message_template',
         'website',
-        'email_confirmation'
+        'web_planner',
+        #'email_confirmation'
     ],
     'data': [
         'menu.xml',

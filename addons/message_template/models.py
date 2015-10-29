@@ -2,7 +2,7 @@
 from urlparse import urljoin
 
 from openerp import models, fields, api, tools
-from openerp.addons.email_template.email_template import mako_template_env
+from openerp.addons.mail.models.mail_template import mako_template_env
 
 
 class MessageTemplate(models.Model):
@@ -129,6 +129,13 @@ class MessageTemplateMixin(models.AbstractModel):
         Used to generate a link to the associated object in e-mail notification.
         """
         return self.env['mail.thread']._get_access_link(mail, partner)
+
+    @api.model
+    def message_get_reply_to(self, res_ids, default=None):
+        """
+        Get a reply-to mail for the object. We don't use this, but the method is required.
+        """
+        return self.env['mail.thread'].message_get_reply_to(res_ids, default)
 
 
 class MailMessage(models.Model):

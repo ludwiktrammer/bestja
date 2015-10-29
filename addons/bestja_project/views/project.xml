@@ -32,9 +32,6 @@
                             <button class="oe_inline oe_stat_button" type="action" name="%(action_project_message)d" icon="fa-envelope" groups="bestja_project.managers">
                                 <div>Wyślij</div>
                             </button>
-                            <button class="oe_inline oe_stat_button" type="action" name="%(mail.action_mail_archives_feeds)d" icon="fa-inbox" context="{'search_default_model': 'bestja.project','search_default_res_id': active_id}">
-                                <div>Wiadomości</div>
-                            </button>
                             <button class="oe_inline oe_stat_button" icon="fa-briefcase" name="%(action_list_tasks)d" type="action">
                                 <field name="tasks_count" widget="statinfo" string="zadań"/>
                             </button>
@@ -108,6 +105,16 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_card bestja_kanban_card">
+                                <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edytuj...</a></li></t>
+                                        <t t-if="widget.deletable"><li><a type="delete">Usuń</a></li></t>
+                                    </ul>
+                                </div>
+                                
                                 <div class="bestja_kanban_title">
                                     <a type="open"><field name="name"/></a>
                                 </div>

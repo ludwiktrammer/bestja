@@ -14,7 +14,6 @@ simple API.""",
     'depends': [
         'base',
         'mail',
-        'email_template',
     ],
     'data': [
         'data.xml',

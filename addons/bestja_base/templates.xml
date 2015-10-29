@@ -1,25 +1,14 @@
 <openerp>
     <data>
-        <template id="show_sign_in" inherit_id="website.show_sign_in">
-            <!-- logging in from frontend should redirect back to frontend -->
-            <a t-attf-href="/web/login" position="attributes">
-                <attribute name="t-attf-href">/web/login?redirect=/</attribute>
-            </a>
-        </template>
-
         <template id="user_navbar" inherit_id="website.user_navbar">
-            <!-- Remove the "mobile preview" icon -->
-            <xpath expr="//li[a[@data-action='show-mobile-preview']]" position="replace"/>
-
-            <!-- Remove the Help menu -->
+            <!-- Hide some website menu items -->
             <xpath expr="//li[a[@id='help-menu-button']]" position="replace"/>
+            <xpath expr="//li[a[@id='promote-menu-button']]" position="replace"/>
 
-            <!-- Change the menu item's caption -->
-            <xpath expr="//ul[@class='dropdown-menu js_usermenu']/li/a[@href='/web']" position="replace">
-                <a href="/web" role="menuitem">Przejdź do aplikacji</a>
+            <!-- Add an item to the website user menu -->
+            <xpath expr="//ul[@class='dropdown-menu js_usermenu']/li" position="before">
+                <li><a href="/web" role="menuitem">Przejdź do aplikacji</a></li>
             </xpath>
         </template>
-
-
     </data>
 </openerp>

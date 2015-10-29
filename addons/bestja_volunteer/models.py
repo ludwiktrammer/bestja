@@ -460,6 +460,7 @@ class Partner(models.Model):
         for the corresponding user object.
         """
         super(Partner, self).check_access_rule(operation)
-        related_users = self.sudo().user_ids
-        if related_users:
-            related_users.sudo(self.env.uid).check_access_rule(operation)
+        for partner in self.sudo():
+            related_users = partner.user_ids
+            if related_users:
+                related_users.sudo(self.env.uid).check_access_rule(operation)

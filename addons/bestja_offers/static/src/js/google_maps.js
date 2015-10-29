@@ -1,12 +1,6 @@
-openerp.bestja_offers = function(instance) {
-    var _t = instance.web._t,
-        _lt = instance.web._lt;
-    var QWeb = instance.web.qweb;
-
-    instance.bestja_offers = {};
-
+openerp.bestja_offers = function(instance, local) {
     /* Google Maps Widget */
-    instance.bestja_offers.WidgetCoordinates = instance.web.form.FormWidget.extend({
+    local.WidgetCoordinates = instance.web.form.FormWidget.extend({
         start: function() {
             this._super();
 
@@ -99,7 +93,6 @@ openerp.bestja_offers = function(instance) {
             this.geocoder.geocode({'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var location = results[0].geometry.location;
-                    console.log(this)
                     obj.set_map_position(location.lat(), location.lng());
                     obj.update_fields_values(location.lat(), location.lng());
                     obj.update_city_district_fields(results[0]);
@@ -128,12 +121,12 @@ openerp.bestja_offers = function(instance) {
             if (place.address_components){
                 for (var i = 0; i < place.address_components.length; i++){
                     if (place.address_components[i].types[0] == 'locality'){
-                        var val = place.address_components[i]['long_name'];
-                        this.field_manager.set_values({"city": val});
+                        var city = place.address_components[i].long_name;
+                        this.field_manager.set_values({"city": city});
                     }
                     if (place.address_components[i].types[0] == 'sublocality_level_1'){
-                        var val = place.address_components[i]['long_name'];
-                        this.field_manager.set_values({"district": val});
+                        var district = place.address_components[i].long_name;
+                        this.field_manager.set_values({"district": district});
                     }
                 }
             }
@@ -172,7 +165,7 @@ openerp.bestja_offers = function(instance) {
         */
         notebook_fix: function(){
             var notebook = this.$el.parents(".oe_notebook_page");
-            if (notebook.length != 0){  // in a notebook!
+            if (notebook.length !== 0){  // in a notebook!
                 var link_id = notebook.attr("aria-labelledby");
                 var obj = this;
                 $("#" + link_id).click(function() {
@@ -182,8 +175,6 @@ openerp.bestja_offers = function(instance) {
             }
 
         },
-
     });
-
-    instance.web.form.custom_widgets.add('google_maps.coordinates', 'instance.bestja_offers.WidgetCoordinates');
-}
+    instance.web.form.widgets.add('google_maps.coordinates', 'local.WidgetCoordinates');
+};

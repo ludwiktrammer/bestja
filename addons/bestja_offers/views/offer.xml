@@ -117,7 +117,6 @@
                             <field name="localization" nolabel="1" options="{'vertical': True}" widget="radio"/>
                             <br/>
                             <br/>
-                            <widget type="google_maps.coordinates" attrs="{'invisible': [('localization', '!=', 'assigned')]}"/><!-- the google map widget needs to have its own separate visibility definition, so it can later receive the change:effective_invisible event. -->
                             <div attrs="{'invisible': [('localization', '!=', 'assigned')]}">
                                 <group string="Wyświetlany opis miejsca" class="medium_input">
                                     <field name="location_name" string="Nazwa"/>
@@ -190,15 +189,13 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_card bestja_kanban_card">
-                                <div class="oe_dropdown_toggle oe_dropdown_kanban oe_custom">
-                                    <span class="oe_e">í</span>
-                                    <ul class="oe_dropdown_menu">
-                                        <t t-if="widget.view.is_action_enabled('edit')">
-                                            <li><a type="edit">Edit...</a></li>
-                                        </t>
-                                        <t t-if="widget.view.is_action_enabled('delete')">
-                                            <li><a type="delete">Delete</a></li>
-                                        </t>
+                                <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edytuj...</a></li></t>
+                                        <t t-if="widget.deletable"><li><a type="delete">Usuń</a></li></t>
                                     </ul>
                                 </div>
                                 <div class="bestja_kanban_title">

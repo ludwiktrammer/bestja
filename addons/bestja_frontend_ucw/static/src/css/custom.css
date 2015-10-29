@@ -11,6 +11,10 @@
     background-color: #982582;
     color: #FFFFFF;
 }
+
+.nav .o_planner_systray, .nav .o_planner_help {
+    display: none;
+}
 /* End of top menu changes */
 
 /* Blog customization*/

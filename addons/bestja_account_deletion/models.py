@@ -15,7 +15,7 @@ class Volunteer(models.Model):
         ('no_satisfaction', 'Wolontariat nie sprawia mi już satysfakcji.'),
         ('else', 'Inny (wpisz powód)'),
     ]
-    active_state = fields.Selection(selection_add=[('deleted', 'usunięty')])
+    # active_state = fields.Selection(selection_add=[('deleted', 'usunięty')])
     reason_for_deleting_account = fields.Selection(REASONS, string=u"Dlaczego chcesz usunąć konto?")
     reason_other_description = fields.Text()
 
@@ -39,7 +39,7 @@ class Volunteer(models.Model):
             'zip_code': '',
             'curriculum_vitae': None,
             'cv_filename': '',
-            'active_state': 'deleted',
+            # 'active_state': 'deleted',
             'active': False,
             'pesel': '',
             'document_id_kind': None,
